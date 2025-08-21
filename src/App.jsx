@@ -1,35 +1,54 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React from "react"
+import { useAppContext } from './context/AppContext'
+import Header from './components/Header'
+import ServiceMode from './pages/ServiceMode'
+import TableSelection from './pages/TableSelection'
+import AllergenSelection from './pages/AllergenSelection'
+import Menu from './pages/Menu'
+import Payment from './pages/Payment'
+import ConfirmationScreen from './components/ConfirmationScreen'
+import FloatingCart from './components/FloatingCart'
+import Toast from './components/Toast'
+import CartModal from './components/CartModal'
+import ProductModal from './components/ProductModal'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const { currentScreen } = useAppContext()
+
+  const renderScreen = () => {
+    switch (currentScreen) {
+      case 'service-mode':
+        return <ServiceMode />
+      case 'table-selection':
+        return <TableSelection />
+      case 'allergen-selection':
+        return <AllergenSelection />
+      case 'menu':
+        return <Menu />
+      case 'payment':
+        return <Payment />
+      case 'confirmation':
+        return <ConfirmationScreen />
+      default:
+        return <ServiceMode />
+    }
+  }
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <div className="min-h-screen relative">
+      <Header />
+
+      <main className="pt-60 pb-32 px-4 max-w-7xl mx-auto">
+        {renderScreen()}
+      </main>
+
+      <FloatingCart />
+      <CartModal />
+      <ProductModal />
+      <Toast />
+    </div>
   )
 }
+
 
 export default App
