@@ -1,4 +1,4 @@
-import React from "react"
+import React from 'react'
 import { useAppContext } from './context/AppContext'
 import Header from './components/Header'
 import ServiceMode from './pages/ServiceMode'
@@ -37,7 +37,7 @@ function App() {
   return (
     <div className="min-h-screen relative">
       <Header />
-
+      
       <main className="pt-60 pb-32 px-4 max-w-7xl mx-auto">
         {renderScreen()}
       </main>
@@ -49,6 +49,5 @@ function App() {
     </div>
   )
 }
-
 
 export default App
