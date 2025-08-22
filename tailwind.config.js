@@ -2,7 +2,7 @@
 export default {
   content: [
     "./index.html",
-    "./src/**/*/.{js, ts, jsx, tsx}"
+    "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
     extend: {
@@ -11,7 +11,7 @@ export default {
       },
       colors: {
         primary: '#1e40af',
-        secondary: '#16a34a',
+        secondary: '#16a34a', 
         tertiary: '#eab308',
         accent: '#f59e0b',
         success: '#22c55e',
@@ -29,10 +29,9 @@ export default {
         '20': '20px',
       },
       screens: {
-        '22inch': '1920px', // Pour écran 22 pouces
+        '22inch': '1920px',
       }
     },
   },
   plugins: [],
 }
-
