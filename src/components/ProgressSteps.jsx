@@ -2,7 +2,7 @@ import React from "react"
 import { useAppContext } from "../context/AppContext"
 
 function ProgressSteps() {
-    const { currentStep } = useAppContext()
+    const { currentStep, currentScreen } = useAppContext()
     
     const steps = [
         { id: 1, icon: 'fas fa-utensils', text: 'Service' },
@@ -11,25 +11,33 @@ function ProgressSteps() {
     ]
 
     const getStepClass = (stepId) => {
+        if (currentScreen === 'confirmation') {
+        return 'completed';
+    }
+
         if (stepId < currentStep) return 'completed';
         if (stepId === currentStep) return 'active';
         return '';
     }
 
     const getConnectorClass = (stepId) => {
+        if (currentScreen === 'confirmation') {
+        return 'active';
+    }
+
         return stepId < currentStep ? 'active' : '';
+        if (stepId === currentStep -1) return 'active'
     }
 
     return (
-        <div className="progress-steps flex justify-center mt-4">
+        <div className="progress-steps max-w-4xl mx-auto">
             {steps.map((step, index) => (
                 <React.Fragment key={step.id}>
-                    {/* <div className={`step ${getStepClass(step.id)} flex items-center`}> */}
                     <div className={`step ${getStepClass(step.id)}`}>
-                        <div className="step-circle">
-                            <i className={`${step.icon} text-2xl`}></i>
+                        <div className={`step-circle ${getStepClass(step.id)}`}>
+                            <i className={`${step.icon}`}></i>
                         </div>
-                        <span className="ml-2">{step.text}</span>
+                        <span className={`step-text ${getStepClass(step.id)}`}>{step.text}</span>
                     </div>
                     {index < steps.length - 1 && (
                         <div className={`step-connector ${getConnectorClass(step.id)}`}></div>
