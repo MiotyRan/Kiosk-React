@@ -1,4 +1,4 @@
-import React, {createContext, useContext, useReducer} from "react"
+import React, { createContext, useContext, useReducer } from 'react'
 
 // etat initial
 const initialState = {
@@ -10,7 +10,8 @@ const initialState = {
     cart: [],
     currentCategory: 'all',
     products: [],
-        toast: {
+    categories: [], // ⭐ AJOUTÉ
+    toast: {
         show: false,
         message: '',
         type: 'info'
@@ -19,7 +20,7 @@ const initialState = {
         cart: false,
         product: false
     },
-    selectProduct: null,
+    selectedProduct: null, // ⭐ CORRIGÉ
     promoApplied: false
 }
 
@@ -27,7 +28,7 @@ const initialState = {
 const ACTIONS = {
     SET_SCREEN: 'SET_SCREEN',
     SET_STEP:'SET_STEP',
-    SET_SERVICE_MODE: 'SET_SERVIC_EMODE',
+    SET_SERVICE_MODE: 'SET_SERVICE_MODE', // ⭐ CORRIGÉ
     SET_TABLE_NUMBER: 'SET_TABLE_NUMBER',
     SET_ALLERGENS: 'SET_ALLERGENS',
     ADD_ALLERGEN: 'ADD_ALLERGEN',
@@ -90,7 +91,7 @@ function AppReducer(state, action) {
         case ACTIONS.REMOVE_ALLERGEN:
             return {
                 ...state,
-                customerAllergens: [...state.customerAllergens.filter(id => id !== action.payload)]
+                customerAllergens: state.customerAllergens.filter(id => id !== action.payload) // ⭐ CORRIGÉ
             }
 
         case ACTIONS.ADD_TO_CART:
@@ -179,7 +180,7 @@ function AppReducer(state, action) {
         case ACTIONS.SET_SELECTED_PRODUCT:
             return {
                 ...state,
-                selectProduct: action.payload
+                selectedProduct: action.payload // ⭐ CORRIGÉ
             }
 
         case ACTIONS.APPLY_PROMO:
@@ -202,6 +203,15 @@ function AppReducer(state, action) {
 
 // context
 const AppContext = createContext()
+
+// hooks personnalisé
+export function useAppContext() {
+    const context = useContext(AppContext)
+    if (!context) {
+        throw new Error('useAppContext must be used within an AppProvider')
+    }
+    return context
+}
 
 // provider
 export function AppProvider({ children }) {
@@ -257,13 +267,4 @@ export function AppProvider({ children }) {
             {children}
         </AppContext.Provider>
     )
-}
-
-// hooks personnalisé
-export function useAppContext() {
-    const context = useContext(AppContext)
-    if (!context) {
-        throw new Error('useAppContext must be used within an AppProvider')
-    }
-    return context
 }
